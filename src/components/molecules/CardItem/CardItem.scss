@@ -1,0 +1,23 @@
+.card-item-wrapper {
+	margin: 1rem 10rem;
+	.card-close {
+		display: flex;
+		justify-content: flex-end;
+	}
+	.card-item {
+		display: flex;
+		.card-item__content {
+			display: inline-flex;
+			width: 100%;
+			justify-content: space-between;
+			.card-item__number {
+				padding-left: 1rem;
+			}
+			.card-item__title {
+			}
+			.card-item__action {
+				padding-right: 1rem;
+			}
+		}
+	}
+}
