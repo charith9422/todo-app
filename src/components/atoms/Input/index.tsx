@@ -7,6 +7,7 @@ export interface IInputProps {
 const Input: React.FC<IInputProps> = ({ placeholder, onChange, value }) => {
 	return (
 		<AntInput
+			data-testid="input"
 			placeholder={placeholder}
 			value={value}
 			onChange={(event) => onChange(event.target.value)}

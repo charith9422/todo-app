@@ -7,7 +7,11 @@ const Card: React.FC<React.PropsWithChildren<ICardProps>> = ({
 	className,
 	children,
 }) => {
-	return <div className={`card ${className}`}>{children}</div>;
+	return (
+		<div className={`card ${className}`} data-testid="card">
+			{children}
+		</div>
+	);
 };
 
 export default Card;

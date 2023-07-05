@@ -13,7 +13,12 @@ const CheckBox: React.FC<ICheckBoxProps> = ({
 	onChange,
 }) => {
 	return (
-		<AntCheckbox checked={checked} onChange={onChange} className={className}>
+		<AntCheckbox
+			checked={checked}
+			onChange={onChange}
+			className={className}
+			data-testid="checkbox"
+		>
 			{label}
 		</AntCheckbox>
 	);

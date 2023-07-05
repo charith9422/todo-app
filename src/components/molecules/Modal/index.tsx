@@ -26,7 +26,7 @@ const Modal: React.FC<React.PropsWithChildren<IModalProps>> = ({
 			onCancel={() => setModalOpen(!modalOpen)}
 		>
 			{children}
-			{suggestedTask && ` ${suggestedTask}`}
+			{suggestedTask && `${suggestedTask}`}
 			<Button
 				type="link"
 				size="small"

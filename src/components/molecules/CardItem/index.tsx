@@ -23,7 +23,7 @@ const CardItem: React.FC<ICardItemProps> = ({
 	const [checked, setChecked] = React.useState(actionStatus);
 	return (
 		<Card className="card-item-wrapper">
-			<section className="card-close">
+			<section className="card-close" data-testid="card-item">
 				<CloseCircleOutlined onClick={onClose} className="card-close__icon" />
 			</section>
 			<section className="card-item">
