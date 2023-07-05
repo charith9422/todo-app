@@ -7,28 +7,30 @@ import "./Home.scss";
 import React from "react";
 import NewTodo from "../../organisms/NewTodo";
 import { INITIAL_TODO_LIST } from "../../../shared/utils";
+import { ICardItemProps } from "../../molecules/CardItem";
 
-export interface IHomeProps {
-	//onChangeSearch: (v: string) => void;
-}
-export interface ITodo {
-	id: number;
-	title: string;
-	actionStatus: any;
-}
-const Home: React.FC<IHomeProps> = () => {
+const Home: React.FC = () => {
 	const [showModal, setShowModal] = React.useState(false);
-	const [todoList, setTodoList] = React.useState<ITodo[]>(INITIAL_TODO_LIST);
+	const [todoList, setTodoList] =
+		React.useState<ICardItemProps[]>(INITIAL_TODO_LIST);
 
 	const [todoName, setTodoName] = React.useState<string>("");
 	const [searchTerm, setSearchTerm] = React.useState<string>("");
-	const [filteredTodoList, setFilteredTodoList] = React.useState<ITodo[]>([]);
+	const [filteredTodoList, setFilteredTodoList] = React.useState<
+		ICardItemProps[]
+	>([]);
 
 	const handleAddNewTodo = () => {
 		if (todoName) {
 			setTodoList((todoList) => [
 				...todoList,
-				{ actionStatus: "", id: todoList.length + 1, title: todoName },
+				{
+					actionStatus: false,
+					id: todoList.length + 1,
+					title: todoName,
+					isDeleted: false,
+					onChangeDone: () => {},
+				},
 			]);
 			setTodoName("");
 		}
@@ -41,6 +43,22 @@ const Home: React.FC<IHomeProps> = () => {
 				todo.title.toLowerCase().startsWith(value.toLowerCase())
 			)
 		);
+	};
+
+	const handleOnDelete = (id: number) => {
+		setTodoList(() => todoList.filter((todo) => todo.id !== id));
+	};
+
+	const handleOnTaskDone = (id: number) => {
+		setTodoList((todoList) => {
+			return todoList.map((data) => {
+				if (data.id === id) {
+					return { ...data, actionStatus: true };
+				} else {
+					return data;
+				}
+			});
+		});
 	};
 
 	return (
@@ -71,17 +89,15 @@ const Home: React.FC<IHomeProps> = () => {
 					<Col>
 						{!searchTerm ? (
 							<CardItemsList
-								onClose={(id) => {
-									console.log(id);
-								}}
+								onClose={(id) => handleOnDelete(id)}
 								data={todoList}
+								onChangeDone={(v) => handleOnTaskDone(v)}
 							/>
 						) : (
 							<CardItemsList
-								onClose={(id) => {
-									console.log(id);
-								}}
+								onClose={(id) => handleOnDelete(id)}
 								data={filteredTodoList}
+								onChangeDone={(v) => handleOnTaskDone(v)}
 							/>
 						)}
 					</Col>

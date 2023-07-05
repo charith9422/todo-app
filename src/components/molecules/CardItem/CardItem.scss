@@ -13,10 +13,11 @@
 			.card-item__number {
 				padding-left: 1rem;
 			}
-			.card-item__title {
-			}
 			.card-item__action {
 				padding-right: 1rem;
+			}
+			&.--deleted {
+				text-decoration: line-through;
 			}
 		}
 	}
