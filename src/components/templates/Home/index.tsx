@@ -8,6 +8,11 @@ import React from "react";
 import NewTodo from "../../organisms/NewTodo";
 import { INITIAL_TODO_LIST } from "../../../shared/utils";
 import { ICardItemProps } from "../../molecules/CardItem";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	selectRandomTaskSlice,
+	fetchData,
+} from "../../../redux/randomTaskSlice";
 
 const Home: React.FC = () => {
 	const [showModal, setShowModal] = React.useState(false);
@@ -19,6 +24,14 @@ const Home: React.FC = () => {
 	const [filteredTodoList, setFilteredTodoList] = React.useState<
 		ICardItemProps[]
 	>([]);
+
+	const dispatch = useDispatch<any>();
+
+	const { data } = useSelector(selectRandomTaskSlice);
+
+	React.useEffect(() => {
+		dispatch(fetchData());
+	}, [dispatch]);
 
 	const handleAddNewTodo = () => {
 		if (todoName) {
@@ -32,6 +45,7 @@ const Home: React.FC = () => {
 					onChangeDone: () => {},
 				},
 			]);
+			dispatch(fetchData());
 			setTodoName("");
 		}
 	};
@@ -105,6 +119,7 @@ const Home: React.FC = () => {
 			</Container>
 			{showModal && (
 				<NewTodo
+					suggestedTask={data?.activity}
 					showModal={showModal}
 					setShowModal={setShowModal}
 					onChangeInput={(name) => setTodoName(name)}

@@ -7,16 +7,19 @@ export interface INewTodoProps {
 	onChangeInput: (val: string) => void;
 	handleOk: () => void;
 	inputValue: string;
+	suggestedTask?: string;
 }
 const NewTodo: React.FC<INewTodoProps> = ({
 	showModal,
 	inputValue,
+	suggestedTask,
 	setShowModal,
 	onChangeInput,
 	handleOk,
 }) => {
 	return (
 		<Modal
+			suggestedTask={suggestedTask}
 			handleOk={handleOk}
 			title="New Todo"
 			modalOpen={showModal}

@@ -5,12 +5,14 @@ export interface IModalProps {
 	modalOpen: boolean;
 	setModalOpen: (val: boolean) => void;
 	title: string;
+	suggestedTask?: string;
 	handleOk: () => void;
 }
 const Modal: React.FC<React.PropsWithChildren<IModalProps>> = ({
 	children,
 	modalOpen,
 	title,
+	suggestedTask = "",
 	setModalOpen,
 	handleOk,
 }) => {
@@ -23,6 +25,7 @@ const Modal: React.FC<React.PropsWithChildren<IModalProps>> = ({
 			onCancel={() => setModalOpen(!modalOpen)}
 		>
 			{children}
+			{suggestedTask && `Hint: ${suggestedTask}`}
 		</AntModal>
 	);
 };
