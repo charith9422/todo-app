@@ -1,16 +1,14 @@
 import axios, { AxiosResponse } from "axios";
 
-const apiService = axios.create({
-	baseURL: "https://www.boredapi.com/api", // Replace with your API base URL
-});
+const API_BASE_URL = "https://www.boredapi.com/api";
 
-export const get = async <T>(endpoint: string): Promise<T> => {
+export const get = async <T>(url: string): Promise<T> => {
 	try {
-		const response: AxiosResponse<T> = await apiService.get(endpoint);
+		const response: AxiosResponse<T> = await axios.get(
+			`${API_BASE_URL}/${url}`
+		);
 		return response.data;
-	} catch (error: any) {
-		throw error.response.data;
+	} catch (error) {
+		throw new Error("API request failed.");
 	}
 };
-
-export default apiService;

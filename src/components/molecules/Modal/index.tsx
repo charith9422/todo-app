@@ -1,5 +1,6 @@
 import { Modal as AntModal } from "antd";
 import React from "react";
+import Button from "../../atoms/Button";
 
 export interface IModalProps {
 	modalOpen: boolean;
@@ -25,7 +26,15 @@ const Modal: React.FC<React.PropsWithChildren<IModalProps>> = ({
 			onCancel={() => setModalOpen(!modalOpen)}
 		>
 			{children}
-			{suggestedTask && `Hint: ${suggestedTask}`}
+			{suggestedTask && ` ${suggestedTask}`}
+			<Button
+				type="link"
+				size="small"
+				text="Copy Text"
+				onClick={() => {
+					navigator.clipboard.writeText(suggestedTask);
+				}}
+			></Button>
 		</AntModal>
 	);
 };

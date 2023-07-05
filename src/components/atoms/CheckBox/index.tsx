@@ -4,10 +4,16 @@ export interface ICheckBoxProps {
 	checked: boolean;
 	onChange: () => void;
 	label: string;
+	className?: string;
 }
-const CheckBox: React.FC<ICheckBoxProps> = ({ label, checked, onChange }) => {
+const CheckBox: React.FC<ICheckBoxProps> = ({
+	label,
+	checked,
+	className,
+	onChange,
+}) => {
 	return (
-		<AntCheckbox checked={checked} onChange={onChange}>
+		<AntCheckbox checked={checked} onChange={onChange} className={className}>
 			{label}
 		</AntCheckbox>
 	);

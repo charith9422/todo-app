@@ -19,11 +19,12 @@ const CardItem: React.FC<ICardItemProps> = ({
 	onClose,
 	onChangeDone,
 }) => {
+	// Used BEM for scss stylings
 	const [checked, setChecked] = React.useState(actionStatus);
 	return (
 		<Card className="card-item-wrapper">
 			<section className="card-close">
-				<CloseCircleOutlined onClick={onClose} />
+				<CloseCircleOutlined onClick={onClose} className="card-close__icon" />
 			</section>
 			<section className="card-item">
 				<div className={`card-item__content ${checked ? "--deleted" : ""}`}>
@@ -37,6 +38,7 @@ const CardItem: React.FC<ICardItemProps> = ({
 								setChecked((checked) => !checked);
 							}}
 							label={checked ? "Done" : "Not Done"}
+							className="card-item__checkbox"
 						/>
 					</p>
 				</div>

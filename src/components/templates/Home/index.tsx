@@ -26,13 +26,14 @@ const Home: React.FC = () => {
 	>([]);
 
 	const dispatch = useDispatch<any>();
-
 	const { data } = useSelector(selectRandomTaskSlice);
 
+	// For fetch random todo from api using redux-toolkit async thunk
 	React.useEffect(() => {
 		dispatch(fetchData());
 	}, [dispatch]);
 
+	// Add new todo handler
 	const handleAddNewTodo = () => {
 		if (todoName) {
 			setTodoList((todoList) => [
@@ -50,6 +51,7 @@ const Home: React.FC = () => {
 		}
 	};
 
+	// Search handler
 	const onChangeSearch = (value: string) => {
 		setSearchTerm(value);
 		setFilteredTodoList(() =>
@@ -59,10 +61,13 @@ const Home: React.FC = () => {
 		);
 	};
 
+	// Delete handler
 	const handleOnDelete = (id: number) => {
 		setTodoList(() => todoList.filter((todo) => todo.id !== id));
+		setFilteredTodoList(() => todoList.filter((todo) => todo.id !== id));
 	};
 
+	// Todo done/not-done handler
 	const handleOnTaskDone = (id: number) => {
 		setTodoList((todoList) => {
 			return todoList.map((data) => {
@@ -78,7 +83,7 @@ const Home: React.FC = () => {
 	return (
 		<>
 			<Container className="home__wrapper">
-				<Row>
+				<Row className="justify-content-md-center">
 					<Col lg="11">
 						<Input
 							onChange={(searchTerm) => onChangeSearch(searchTerm)}
@@ -89,7 +94,6 @@ const Home: React.FC = () => {
 					<Col lg="1">
 						<Button
 							text="Add New"
-							style={{ background: "green" }}
 							icon={<PlusCircleOutlined />}
 							type="primary"
 							size="middle"

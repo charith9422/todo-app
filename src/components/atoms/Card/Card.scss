@@ -1,6 +1,7 @@
+@import "../../../scss/index.scss";
 .card {
 	margin: 0.5rem;
 	padding: 1rem;
-	border: 1px solid black;
+	border: 1px solid $gray-500;
 	border-radius: 0.5rem;
 }
