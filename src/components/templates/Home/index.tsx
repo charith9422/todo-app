@@ -9,18 +9,20 @@ import NewTodo from "../../organisms/NewTodo";
 import { INITIAL_TODO_LIST } from "../../../shared/utils";
 
 export interface IHomeProps {
-	onChangeSearch: (v: string) => void;
+	//onChangeSearch: (v: string) => void;
 }
 export interface ITodo {
 	id: number;
 	title: string;
 	actionStatus: any;
 }
-const Home: React.FC<IHomeProps> = ({ onChangeSearch }) => {
+const Home: React.FC<IHomeProps> = () => {
 	const [showModal, setShowModal] = React.useState(false);
 	const [todoList, setTodoList] = React.useState<ITodo[]>(INITIAL_TODO_LIST);
 
 	const [todoName, setTodoName] = React.useState<string>("");
+	const [searchTerm, setSearchTerm] = React.useState<string>("");
+	const [filteredTodoList, setFilteredTodoList] = React.useState<ITodo[]>([]);
 
 	const handleAddNewTodo = () => {
 		if (todoName) {
@@ -31,15 +33,25 @@ const Home: React.FC<IHomeProps> = ({ onChangeSearch }) => {
 			setTodoName("");
 		}
 	};
+
+	const onChangeSearch = (value: string) => {
+		setSearchTerm(value);
+		setFilteredTodoList(() =>
+			todoList.filter((todo) =>
+				todo.title.toLowerCase().startsWith(value.toLowerCase())
+			)
+		);
+	};
+
 	return (
 		<>
 			<Container className="home__wrapper">
 				<Row>
 					<Col lg="11">
 						<Input
-							onChange={onChangeSearch}
+							onChange={(searchTerm) => onChangeSearch(searchTerm)}
 							placeholder="Search Todo..."
-							value=""
+							value={searchTerm}
 						/>
 					</Col>
 					<Col lg="1">
@@ -57,12 +69,21 @@ const Home: React.FC<IHomeProps> = ({ onChangeSearch }) => {
 				</Row>
 				<Row>
 					<Col>
-						<CardItemsList
-							onClose={(id) => {
-								console.log(id);
-							}}
-							data={todoList}
-						/>
+						{!searchTerm ? (
+							<CardItemsList
+								onClose={(id) => {
+									console.log(id);
+								}}
+								data={todoList}
+							/>
+						) : (
+							<CardItemsList
+								onClose={(id) => {
+									console.log(id);
+								}}
+								data={filteredTodoList}
+							/>
+						)}
 					</Col>
 				</Row>
 			</Container>
