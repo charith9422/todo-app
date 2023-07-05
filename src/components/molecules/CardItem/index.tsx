@@ -3,7 +3,7 @@ import "./CardItem.scss";
 import { CloseCircleOutlined } from "@ant-design/icons";
 
 export interface ICardItemProps {
-	id: string;
+	id: number;
 	title: string;
 	actionStatus?: React.ReactNode;
 }

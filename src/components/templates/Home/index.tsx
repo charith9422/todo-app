@@ -5,19 +5,42 @@ import { PlusCircleOutlined } from "@ant-design/icons";
 import CardItemsList from "../../organisms/CardList";
 import "./Home.scss";
 import React from "react";
-import Modal from "../../molecules/Modal";
+import NewTodo from "../../organisms/NewTodo";
+import { INITIAL_TODO_LIST } from "../../../shared/utils";
 
 export interface IHomeProps {
 	onChangeSearch: (v: string) => void;
 }
+export interface ITodo {
+	id: number;
+	title: string;
+	actionStatus: any;
+}
 const Home: React.FC<IHomeProps> = ({ onChangeSearch }) => {
 	const [showModal, setShowModal] = React.useState(false);
+	const [todoList, setTodoList] = React.useState<ITodo[]>(INITIAL_TODO_LIST);
+
+	const [todoName, setTodoName] = React.useState<string>("");
+
+	const handleAddNewTodo = () => {
+		if (todoName) {
+			setTodoList((todoList) => [
+				...todoList,
+				{ actionStatus: "", id: todoList.length + 1, title: todoName },
+			]);
+			setTodoName("");
+		}
+	};
 	return (
 		<>
 			<Container className="home__wrapper">
 				<Row>
 					<Col lg="11">
-						<Input onchange={onChangeSearch} placeholder="Search Todo..." />
+						<Input
+							onChange={onChangeSearch}
+							placeholder="Search Todo..."
+							value=""
+						/>
 					</Col>
 					<Col lg="1">
 						<Button
@@ -27,7 +50,6 @@ const Home: React.FC<IHomeProps> = ({ onChangeSearch }) => {
 							type="primary"
 							size="middle"
 							onClick={() => {
-								console.log("d");
 								setShowModal((showModal) => !showModal);
 							}}
 						/>
@@ -39,27 +61,18 @@ const Home: React.FC<IHomeProps> = ({ onChangeSearch }) => {
 							onClose={(id) => {
 								console.log(id);
 							}}
-							data={[
-								{
-									id: "1",
-									title: "kjsd jlsdl",
-									actionStatus: "",
-								},
-								{
-									id: "2",
-									title: "test kjhkj",
-									actionStatus: "",
-								},
-							]}
+							data={todoList}
 						/>
 					</Col>
 				</Row>
 			</Container>
 			{showModal && (
-				<Modal
-					title="New ToDo"
-					modalOpen={showModal}
-					setModalOpen={setShowModal}
+				<NewTodo
+					showModal={showModal}
+					setShowModal={setShowModal}
+					onChangeInput={(name) => setTodoName(name)}
+					handleOk={handleAddNewTodo}
+					inputValue={todoName}
 				/>
 			)}
 		</>

@@ -1,13 +1,15 @@
 import { Input as AntInput } from "antd";
 export interface IInputProps {
 	placeholder?: string;
-	onchange: (v: string) => void;
+	onChange: (v: string) => void;
+	value: string;
 }
-const Input: React.FC<IInputProps> = ({ placeholder, onchange }) => {
+const Input: React.FC<IInputProps> = ({ placeholder, onChange, value }) => {
 	return (
 		<AntInput
 			placeholder={placeholder}
-			onChange={(event) => onchange(event.target.value)}
+			value={value}
+			onChange={(event) => onChange(event.target.value)}
 		/>
 	);
 };
