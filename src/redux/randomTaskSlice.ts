@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import axios, { AxiosResponse } from "axios";
 import { RootState } from "./store";
+import { getAPI } from "../api/apiService";
 
 interface IRandomTaskApiResponse {
 	activity: string;
@@ -20,11 +20,8 @@ export const fetchData = createAsyncThunk<IRandomTaskApiResponse, void>(
 	"fetchData",
 	async () => {
 		try {
-			const response: AxiosResponse<IRandomTaskApiResponse> =
-				await axios.get<IRandomTaskApiResponse>(
-					"https://www.boredapi.com/api/activity"
-				);
-			return response.data;
+			const response: IRandomTaskApiResponse = await getAPI("activity");
+			return response;
 		} catch (error: any) {
 			throw error.response.data;
 		}
