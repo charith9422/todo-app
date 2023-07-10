@@ -56,7 +56,7 @@ const Home: React.FC = () => {
 		setSearchTerm(value);
 		setFilteredTodoList(() =>
 			todoList.filter((todo) =>
-				todo.title.toLowerCase().startsWith(value.toLowerCase())
+				todo.title.toLowerCase().includes(value.toLowerCase())
 			)
 		);
 	};
